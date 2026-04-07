@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Gold Energy - Descubra quanto você pode economizar com energia solar. Projeto completo, homologação e instalação.">
+    <title>Gold Energy | A sua energia vale ouro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold-primary: #F7B500;
+            --gold-light: #FFD54F;
+            --gold-dark: #C49000;
+            --gold-glow: rgba(247, 181, 0, 0.3);
+            --blue-primary: #0A2463;
+            --blue-dark: #051937;
+            --blue-deeper: #030D1F;
+            --blue-light: #1E3A8A;
+            --white: #FFFFFF;
+            --gray-light: #F5F5F5;
+            --gray-text: #A0AEC0;
+            --success: #10B981;
+            --gradient-gold: linear-gradient(135deg, #F7B500 0%, #FFD54F 50%, #F7B500 100%);
+            --gradient-blue: linear-gradient(180deg, #0A2463 0%, #051937 100%);
+            --shadow-gold: 0 4px 30px rgba(247, 181, 0, 0.4);
+            --shadow-card: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--blue-deeper);
+            color: var(--white);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
+        }
+
+        body {
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
+        }
+
+        /* ===== SCREEN CONTAINER ===== */
+        .screen {
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
+            display: none;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .screen.active {
+            display: flex;
+        }
+
+        /* ===== BACKGROUND EFFECTS ===== */
+        .bg-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at 50% 0%, rgba(247, 181, 0, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 100% 100%, rgba(30, 58, 138, 0.15) 0%, transparent 40%),
+                radial-gradient(ellipse at 0% 100%, rgba(30, 58, 138, 0.1) 0%, transparent 40%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.03;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            background: var(--gold-primary);
+            top: -100px;
+            right: -100px;
+            animation-delay: 0s;
+        }
+
+        .shape-2 {
+            width: 200px;
+            height: 200px;
+            background: var(--blue-light);
+            bottom: 20%;
+            left: -50px;
+            animation-delay: -5s;
+        }
+
+        .shape-3 {
+            width: 150px;
+            height: 150px;
+            background: var(--gold-primary);
+            bottom: -50px;
+            right: 20%;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(5deg); }
+        }
+
+        /* ===== SCREEN 1: LEAD CAPTURE ===== */
+        #screen1 {
+            background: var(--gradient-blue);
+            padding: 0;
+        }
+
+        .logo-container {
+            background: var(--white);
+            padding: 16px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo {
+            max-width: 160px;
+            height: auto;
+            display: block;
+        }
+
+        .content-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 24px 20px 32px;
+            position: relative;
+            z-index: 5;
+            overflow-y: auto;
+        }
+
+        .slogan {
+            text-align: center;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--gold-primary);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .headline {
+            text-align: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 12px;
+            animation: fadeInUp 0.6s ease-out 0.1s both;
+        }
+
+        .headline span {
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subheadline {
+            text-align: center;
+            font-size: 1rem;
+            color: var(--gray-text);
+            line-height: 1.5;
+            margin-bottom: 28px;
+            animation: fadeInUp 0.6s ease-out 0.2s both;
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 24px 20px;
+            backdrop-filter: blur(10px);
+            animation: fadeInUp 0.6s ease-out 0.3s both;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--gray-text);
+            margin-bottom: 8px;
+            padding-left: 4px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 16px 18px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            color: var(--white);
+            background: rgba(255, 255, 255, 0.06);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .form-input:focus {
+            border-color: var(--gold-primary);
+            background: rgba(247, 181, 0, 0.05);
+            box-shadow: 0 0 0 4px rgba(247, 181, 0, 0.1);
+        }
+
+        .form-input-icon {
+            position: relative;
+        }
+
+        .form-input-icon .form-input {
+            padding-left: 50px;
+        }
+
+        .form-input-icon .icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.1rem;
+            opacity: 0.5;
+        }
+
+        .currency-prefix {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gold-primary);
+        }
+
+        .form-input-icon .form-input.currency {
+            padding-left: 55px;
+        }
+
+        .cta-button {
+            width: 100%;
+            padding: 18px 24px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--blue-dark);
+            background: var(--gradient-gold);
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-gold);
+            margin-top: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:active {
+            transform: scale(0.98);
+        }
+
+        .cta-button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .microcopy {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .microcopy-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            color: var(--gray-text);
+        }
+
+        .microcopy-item svg {
+            width: 14px;
+            height: 14px;
+            color: var(--success);
+        }
+
+        /* ===== SCREEN 2: LOADING TRANSITION ===== */
+        #screen2 {
+            background: var(--gradient-blue);
+            justify-content: center;
+            align-items: center;
+            padding: 40px 24px;
+            text-align: center;
+        }
+
+        .loading-content {
+            max-width: 340px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .loading-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 32px;
+            position: relative;
+        }
+
+        .loading-ring {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 4px solid transparent;
+            border-top-color: var(--gold-primary);
+            border-radius: 50%;
+            animation: spin 1.2s linear infinite;
+        }
+
+        .loading-ring:nth-child(2) {
+            width: 80%;
+            height: 80%;
+            top: 10%;
+            left: 10%;
+            border-top-color: var(--gold-light);
+            animation-duration: 1.5s;
+            animation-direction: reverse;
+        }
+
+        .loading-ring:nth-child(3) {
+            width: 60%;
+            height: 60%;
+            top: 20%;
+            left: 20%;
+            border-top-color: var(--blue-light);
+            animation-duration: 1s;
+        }
+
+        .loading-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--white);
+        }
+
+        .loading-title span {
+            color: var(--gold-primary);
+        }
+
+        .loading-subtitle {
+            font-size: 0.95rem;
+            color: var(--gray-text);
+            margin-bottom: 40px;
+        }
+
+        .phrases-container {
+            height: 120px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .phrase {
+            position: absolute;
+            width: 100%;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 0 10px;
+        }
+
+        .phrase.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .phrase.exit {
+            opacity: 0;
+            transform: translateY(-40px);
+        }
+
+        .phrase-icon {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .phrase-text {
+            font-size: 1.15rem;
+            font-weight: 500;
+            line-height: 1.5;
+            color: var(--white);
+        }
+
+        .phrase-text span {
+            color: var(--gold-primary);
+            font-weight: 700;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            margin-top: 40px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-gold);
+            border-radius: 2px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* ===== SCREEN 3: RESULTS ===== */
+        #screen3 {
+            background: var(--gradient-blue);
+            padding: 0;
+        }
+
+        .results-header {
+            background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-dark) 100%);
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .results-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+
+        .results-header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .results-greeting {
+            font-size: 0.9rem;
+            color: var(--blue-dark);
+            opacity: 0.8;
+            margin-bottom: 4px;
+        }
+
+        .results-total-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--blue-dark);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .results-total-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--blue-dark);
+            line-height: 1;
+            text-shadow: 0 2px 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .results-total-period {
+            font-size: 0.85rem;
+            color: var(--blue-dark);
+            opacity: 0.7;
+            margin-top: 4px;
+        }
+
+        .results-content {
+            flex: 1;
+            padding: 24px 20px 32px;
+            overflow-y: auto;
+            position: relative;
+            z-index: 5;
+        }
+
+        .results-headline {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-align: center;
+            line-height: 1.3;
+            margin-bottom: 24px;
+        }
+
+        .results-headline span {
+            color: var(--gold-primary);
+        }
+
+        .savings-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .savings-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 16px;
+            text-align: center;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.5s ease-out both;
+        }
+
+        .savings-card:nth-child(1) { animation-delay: 0.1s; }
+        .savings-card:nth-child(2) { animation-delay: 0.2s; }
+        .savings-card:nth-child(3) { animation-delay: 0.3s; }
+        .savings-card:nth-child(4) { animation-delay: 0.4s; }
+
+        .savings-card.highlight {
+            grid-column: span 2;
+            background: linear-gradient(135deg, rgba(247, 181, 0, 0.15) 0%, rgba(247, 181, 0, 0.05) 100%);
+            border-color: rgba(247, 181, 0, 0.3);
+        }
+
+        .savings-icon {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .savings-label {
+            font-size: 0.75rem;
+            color: var(--gray-text);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+
+        .savings-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--gold-primary);
+        }
+
+        .savings-card.highlight .savings-value {
+            font-size: 1.6rem;
+        }
+
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title svg {
+            width: 20px;
+            height: 20px;
+            color: var(--gold-primary);
+        }
+
+        .timeline-container {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 24px;
+            animation: fadeInUp 0.5s ease-out 0.5s both;
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .timeline-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .timeline-item:first-child {
+            padding-top: 0;
+        }
+
+        .timeline-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--gold-primary);
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .timeline-dot::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 36px;
+            background: rgba(247, 181, 0, 0.3);
+        }
+
+        .timeline-item:last-child .timeline-dot::after {
+            display: none;
+        }
+
+        .timeline-text {
+            flex: 1;
+        }
+
+        .timeline-label {
+            font-size: 0.85rem;
+            color: var(--gray-text);
+        }
+
+        .timeline-value {
+            font-weight: 600;
+            color: var(--white);
+            font-size: 1rem;
+        }
+
+        .timeline-value span {
+            color: var(--gold-primary);
+        }
+
+        .payment-options {
+            margin-bottom: 24px;
+            animation: fadeInUp 0.5s ease-out 0.6s both;
+        }
+
+        .payment-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .payment-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 14px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .payment-card:hover {
+            border-color: rgba(247, 181, 0, 0.3);
+            background: rgba(247, 181, 0, 0.05);
+        }
+
+        .payment-icon {
+            font-size: 1.3rem;
+            margin-bottom: 6px;
+        }
+
+        .payment-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 2px;
+        }
+
+        .payment-desc {
+            font-size: 0.7rem;
+            color: var(--gray-text);
+        }
+
+        .urgency-box {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0.05) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 24px;
+            text-align: center;
+            animation: fadeInUp 0.5s ease-out 0.7s both;
+        }
+
+        .urgency-text {
+            font-size: 0.95rem;
+            color: var(--white);
+            line-height: 1.5;
+        }
+
+        .urgency-text strong {
+            color: var(--success);
+        }
+
+        .final-cta {
+            animation: fadeInUp 0.5s ease-out 0.8s both;
+        }
+
+        .final-cta .cta-button {
+            font-size: 1.15rem;
+            padding: 20px 24px;
+        }
+
+        .whatsapp-cta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .whatsapp-cta svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .trust-badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .trust-badge-icon {
+            font-size: 1.2rem;
+        }
+
+        .trust-badge-text {
+            font-size: 0.7rem;
+            color: var(--gray-text);
+            text-align: center;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (min-width: 480px) {
+            .content-wrapper {
+                max-width: 420px;
+                margin: 0 auto;
+                padding: 32px 24px 40px;
+            }
+
+            .headline {
+                font-size: 2rem;
+            }
+
+            .form-container {
+                padding: 28px 24px;
+            }
+
+            .results-content {
+                max-width: 480px;
+                margin: 0 auto;
+            }
+
+            .results-total-value {
+                font-size: 3.2rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .content-wrapper {
+                max-width: 500px;
+                padding: 48px 32px;
+            }
+
+            .headline {
+                font-size: 2.25rem;
+            }
+
+            .results-content {
+                max-width: 560px;
+            }
+
+            .savings-grid {
+                gap: 16px;
+            }
+
+            .savings-card {
+                padding: 20px;
+            }
+
+            .savings-value {
+                font-size: 1.6rem;
+            }
+        }
+
+        /* ===== ACCESSIBILITY ===== */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* ===== FORM VALIDATION STYLES ===== */
+        .form-input.error {
+            border-color: #EF4444;
+            background: rgba(239, 68, 68, 0.05);
+        }
+
+        .error-message {
+            color: #EF4444;
+            font-size: 0.8rem;
+            margin-top: 6px;
+            padding-left: 4px;
+            display: none;
+        }
+
+        .form-group.has-error .error-message {
+            display: block;
+        }
+
+        /* ===== SCROLL INDICATOR ===== */
+        .scroll-indicator {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0.6;
+            animation: bounce 2s infinite;
+            z-index: 100;
+            display: none;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== SCREEN 1: LEAD CAPTURE ===== -->
+    <section id="screen1" class="screen active">
+        <div class="bg-pattern"></div>
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
+
+        <div class="logo-container">
+            <img src="https://raw.githubusercontent.com/iagogrigoandrade/gold-energy/refs/heads/main/logogoldenergy.png" alt="Gold Energy" class="logo">
+        </div>
+
+        <div class="content-wrapper">
+            <p class="slogan">✦ A sua energia vale ouro ✦</p>
+            
+            <h1 class="headline">
+                Descubra <span>quanto você pode economizar</span> com energia solar
+            </h1>
+            
+            <p class="subheadline">
+                Preencha seus dados e veja em segundos o potencial de economia para os próximos 25 anos.
+            </p>
+
+            <form id="leadForm" class="form-container">
+                <div class="form-group">
+                    <label class="form-label">Seu nome</label>
+                    <div class="form-input-icon">
+                        <span class="icon">👤</span>
+                        <input type="text" id="nome" class="form-input" placeholder="Como podemos te chamar?" required>
+                    </div>
+                    <span class="error-message">Por favor, informe seu nome</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">WhatsApp</label>
+                    <div class="form-input-icon">
+                        <span class="icon">📱</span>
+                        <input type="tel" id="telefone" class="form-input" placeholder="(00) 00000-0000" required>
+                    </div>
+                    <span class="error-message">Informe um telefone válido</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Sua cidade</label>
+                    <div class="form-input-icon">
+                        <span class="icon">📍</span>
+                        <input type="text" id="cidade" class="form-input" placeholder="Onde você mora?" required>
+                    </div>
+                    <span class="error-message">Por favor, informe sua cidade</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Quanto você paga de luz por mês?</label>
+                    <div class="form-input-icon">
+                        <span class="currency-prefix">R$</span>
+                        <input type="text" id="valorConta" class="form-input currency" placeholder="Ex: 350" required inputmode="numeric">
+                    </div>
+                    <span class="error-message">Informe o valor da sua conta</span>
+                </div>
+
+                <button type="submit" class="cta-button">
+                    ⚡ Me mostre o quanto vou economizar
+                </button>
+
+                <div class="microcopy">
+                    <span class="microcopy-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                        Leva 30 segundos
+                    </span>
+                    <span class="microcopy-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                        Sem compromisso
+                    </span>
+                    <span class="microcopy-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                        100% gratuito
+                    </span>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- ===== SCREEN 2: LOADING TRANSITION ===== -->
+    <section id="screen2" class="screen">
+        <div class="bg-pattern"></div>
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
+
+        <div class="loading-content">
+            <div class="loading-icon">
+                <div class="loading-ring"></div>
+                <div class="loading-ring"></div>
+                <div class="loading-ring"></div>
+                <span class="loading-center">☀️</span>
+            </div>
+
+            <h2 class="loading-title">
+                Calculando sua economia, <span id="userName">...</span>
+            </h2>
+            <p class="loading-subtitle">Estamos analisando o potencial de economia para você</p>
+
+            <div class="phrases-container">
+                <div class="phrase" data-index="0">
+                    <span class="phrase-icon">🚗</span>
+                    <p class="phrase-text">Sua economia pode ajudar a conquistar um <span>carro novo</span></p>
+                </div>
+                <div class="phrase" data-index="1">
+                    <span class="phrase-icon">✈️</span>
+                    <p class="phrase-text">A <span>viagem dos sonhos</span> pode ficar muito mais perto</p>
+                </div>
+                <div class="phrase" data-index="2">
+                    <span class="phrase-icon">🏠</span>
+                    <p class="phrase-text">Você pode estar mais perto da sua <span>casa nova</span> do que imagina</p>
+                </div>
+                <div class="phrase" data-index="3">
+                    <span class="phrase-icon">💰</span>
+                    <p class="phrase-text">Transforme <span>gasto mensal</span> em <span>patrimônio</span></p>
+                </div>
+                <div class="phrase" data-index="4">
+                    <span class="phrase-icon">🎓</span>
+                    <p class="phrase-text">Economizar energia também é <span>investir no seu futuro</span></p>
+                </div>
+                <div class="phrase" data-index="5">
+                    <span class="phrase-icon">🌟</span>
+                    <p class="phrase-text">Menos conta de luz, mais <span>liberdade financeira</span></p>
+                </div>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SCREEN 3: RESULTS ===== -->
+    <section id="screen3" class="screen">
+        <div class="bg-pattern"></div>
+
+        <div class="results-header">
+            <div class="results-header-content">
+                <p class="results-greeting">Olá, <span id="resultsName">...</span>! 🎉</p>
+                <p class="results-total-label">Economia total estimada</p>
+                <p class="results-total-value" id="totalSavings">R$ 0</p>
+                <p class="results-total-period">ao longo de 25 anos</p>
+            </div>
+        </div>
+
+        <div class="results-content">
+            <h2 class="results-headline">
+                O valor que você paga em energia <span>pode se transformar em economia por décadas</span>
+            </h2>
+
+            <div class="savings-grid">
+                <div class="savings-card">
+                    <span class="savings-icon">📅</span>
+                    <p class="savings-label">Economia mensal</p>
+                    <p class="savings-value" id="monthlySavings">R$ 0</p>
+                </div>
+                <div class="savings-card">
+                    <span class="savings-icon">📆</span>
+                    <p class="savings-label">Economia anual</p>
+                    <p class="savings-value" id="yearlySavings">R$ 0</p>
+                </div>
+                <div class="savings-card highlight">
+                    <span class="savings-icon">🏆</span>
+                    <p class="savings-label">Economia nos 20 anos após quitar o sistema</p>
+                    <p class="savings-value" id="longTermSavings">R$ 0</p>
+                </div>
+            </div>
+
+            <div class="timeline-container">
+                <h3 class="section-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                    Como funciona o retorno
+                </h3>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-text">
+                        <p class="timeline-label">Vida útil da usina solar</p>
+                        <p class="timeline-value"><span>25 anos</span> de geração de energia</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-text">
+                        <p class="timeline-label">Período de pagamento do sistema</p>
+                        <p class="timeline-value">Aproximadamente <span>5 anos</span></p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-text">
+                        <p class="timeline-label">Período de lucro energético</p>
+                        <p class="timeline-value"><span>20 anos</span> economizando 100%</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="payment-options">
+                <h3 class="section-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg>
+                    Formas de pagamento
+                </h3>
+                <div class="payment-grid">
+                    <div class="payment-card">
+                        <span class="payment-icon">💳</span>
+                        <p class="payment-name">Cartão de Crédito</p>
+                        <p class="payment-desc">Em até 21x</p>
+                    </div>
+                    <div class="payment-card">
+                        <span class="payment-icon">🏦</span>
+                        <p class="payment-name">Financiamento</p>
+                        <p class="payment-desc">Bancário facilitado</p>
+                    </div>
+                    <div class="payment-card">
+                        <span class="payment-icon">🏠</span>
+                        <p class="payment-name">Reforma Casa Brasil</p>
+                        <p class="payment-desc">Até R$ 30 mil</p>
+                    </div>
+                    <div class="payment-card">
+                        <span class="payment-icon">🚙</span>
+                        <p class="payment-name">Veículo em Garantia</p>
+                        <p class="payment-desc">Empréstimo especial</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="urgency-box">
+                <p class="urgency-text">
+                    ⏰ <strong>Quanto antes você começar, antes começa a economizar.</strong><br>
+                    Cada mês que passa é dinheiro que poderia estar no seu bolso.
+                </p>
+            </div>
+
+            <div class="final-cta">
+                <button type="button" class="cta-button whatsapp-cta" id="ctaFinal">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    Quero falar com um especialista
+                </button>
+            </div>
+
+            <div class="trust-badges">
+                <div class="trust-badge">
+                    <span class="trust-badge-icon">🔒</span>
+                    <span class="trust-badge-text">Dados<br>seguros</span>
+                </div>
+                <div class="trust-badge">
+                    <span class="trust-badge-icon">⚡</span>
+                    <span class="trust-badge-text">Projeto<br>completo</span>
+                </div>
+                <div class="trust-badge">
+                    <span class="trust-badge-icon">✅</span>
+                    <span class="trust-badge-text">Homologação<br>inclusa</span>
+                </div>
+                <div class="trust-badge">
+                    <span class="trust-badge-icon">🛠️</span>
+                    <span class="trust-badge-text">Instalação<br>profissional</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // ===== DATA STORAGE =====
+        const leadData = {
+            nome: '',
+            telefone: '',
+            cidade: '',
+            valorConta: 0
+        };
+
+        // ===== UTILITY FUNCTIONS =====
+        function formatCurrency(value) {
+            return new Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(value);
+        }
+
+        function formatPhone(value) {
+            const numbers = value.replace(/\D/g, '');
+            if (numbers.length <= 2) return numbers;
+            if (numbers.length <= 7) return `(${numbers.slice(0, 2)}) ${numbers.slice(2)}`;
+            if (numbers.length <= 11) return `(${numbers.slice(0, 2)}) ${numbers.slice(2, 7)}-${numbers.slice(7)}`;
+            return `(${numbers.slice(0, 2)}) ${numbers.slice(2, 7)}-${numbers.slice(7, 11)}`;
+        }
+
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            document.getElementById(screenId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        // ===== FORM HANDLING =====
+        const form = document.getElementById('leadForm');
+        const telefoneInput = document.getElementById('telefone');
+        const valorContaInput = document.getElementById('valorConta');
+
+        // Phone mask
+        telefoneInput.addEventListener('input', (e) => {
+            e.target.value = formatPhone(e.target.value);
+        });
+
+        // Currency formatting
+        valorContaInput.addEventListener('input', (e) => {
+            let value = e.target.value.replace(/\D/g, '');
+            e.target.value = value;
+        });
+
+        // Form validation
+        function validateForm() {
+            let isValid = true;
+            
+            const fields = [
+                { id: 'nome', validate: (v) => v.trim().length >= 2 },
+                { id: 'telefone', validate: (v) => v.replace(/\D/g, '').length >= 10 },
+                { id: 'cidade', validate: (v) => v.trim().length >= 2 },
+                { id: 'valorConta', validate: (v) => parseInt(v) >= 50 }
+            ];
+
+            fields.forEach(field => {
+                const input = document.getElementById(field.id);
+                const formGroup = input.closest('.form-group');
+                
+                if (!field.validate(input.value)) {
+                    formGroup.classList.add('has-error');
+                    input.classList.add('error');
+                    isValid = false;
+                } else {
+                    formGroup.classList.remove('has-error');
+                    input.classList.remove('error');
+                }
+            });
+
+            return isValid;
+        }
+
+        // Form submission
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            if (!validateForm()) return;
+
+            // Store data
+            leadData.nome = document.getElementById('nome').value.trim();
+            leadData.telefone = document.getElementById('telefone').value;
+            leadData.cidade = document.getElementById('cidade').value.trim();
+            leadData.valorConta = parseInt(document.getElementById('valorConta').value) || 0;
+
+            // Transition to loading screen
+            showScreen('screen2');
+            startLoadingAnimation();
+        });
+
+        // ===== LOADING ANIMATION =====
+        function startLoadingAnimation() {
+            // Update user name
+            const firstName = leadData.nome.split(' ')[0];
+            document.getElementById('userName').textContent = firstName;
+
+            // Phrases animation
+            const phrases = document.querySelectorAll('.phrase');
+            let currentPhrase = 0;
+            const totalDuration = 8000; // 8 seconds
+            const phraseInterval = totalDuration / phrases.length;
+
+            // Show first phrase
+            phrases[0].classList.add('active');
+
+            const phraseTimer = setInterval(() => {
+                // Exit current phrase
+                phrases[currentPhrase].classList.remove('active');
+                phrases[currentPhrase].classList.add('exit');
+
+                // Move to next
+                currentPhrase++;
+
+                if (currentPhrase < phrases.length) {
+                    // Show next phrase
+                    setTimeout(() => {
+                        phrases[currentPhrase].classList.add('active');
+                    }, 100);
+                }
+            }, phraseInterval);
+
+            // Progress bar animation
+            const progressFill = document.getElementById('progressFill');
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += 1.25; // 100 / 80 steps (8 seconds / 100ms)
+                progressFill.style.width = Math.min(progress, 100) + '%';
+            }, 100);
+
+            // Transition to results after 8 seconds
+            setTimeout(() => {
+                clearInterval(phraseTimer);
+                clearInterval(progressInterval);
+                showResults();
+            }, totalDuration);
+        }
+
+        // ===== RESULTS CALCULATION =====
+        function showResults() {
+            showScreen('screen3');
+
+            // Calculate savings (estimating ~90% of bill as savings over time)
+            const monthlyBill = leadData.valorConta;
+            const monthlySavings = Math.round(monthlyBill * 0.90);
+            const yearlySavings = monthlySavings * 12;
+            const totalSavings25Years = yearlySavings * 25;
+            const savingsAfterPayoff = yearlySavings * 20; // 20 years after 5 years payoff
+
+            // Update UI with first name
+            const firstName = leadData.nome.split(' ')[0];
+            document.getElementById('resultsName').textContent = firstName;
+
+            // Animate numbers
+            animateValue('totalSavings', 0, totalSavings25Years, 1500, formatCurrency);
+            animateValue('monthlySavings', 0, monthlySavings, 1000, formatCurrency);
+            animateValue('yearlySavings', 0, yearlySavings, 1200, formatCurrency);
+            animateValue('longTermSavings', 0, savingsAfterPayoff, 1400, formatCurrency);
+        }
+
+        function animateValue(elementId, start, end, duration, formatter) {
+            const element = document.getElementById(elementId);
+            const startTime = performance.now();
+            
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                // Easing function (ease-out-cubic)
+                const easeProgress = 1 - Math.pow(1 - progress, 3);
+                const currentValue = Math.round(start + (end - start) * easeProgress);
+                
+                element.textContent = formatter(currentValue);
+                
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                }
+            }
+            
+            requestAnimationFrame(update);
+        }
+
+        // ===== CTA BUTTON =====
+        document.getElementById('ctaFinal').addEventListener('click', () => {
+            // Generate WhatsApp message
+            const message = encodeURIComponent(
+                `Olá! Sou ${leadData.nome}, de ${leadData.cidade}. ` +
+                `Pago aproximadamente R$ ${leadData.valorConta} de conta de luz e tenho interesse em energia solar. ` +
+                `Gostaria de receber uma simulação completa.`
+            );
+            
+            // Open WhatsApp (replace with actual number)
+            window.open(`https://wa.me/5500000000000?text=${message}`, '_blank');
+        });
+
+        // ===== INPUT FOCUS EFFECTS =====
+        document.querySelectorAll('.form-input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.closest('.form-group').classList.remove('has-error');
+                this.classList.remove('error');
+            });
+        });
+
+        // ===== PREVENT ZOOM ON INPUT FOCUS (iOS) =====
+        document.addEventListener('touchstart', function() {}, {passive: true});
+    </script>
+
+</body>
+</html>
