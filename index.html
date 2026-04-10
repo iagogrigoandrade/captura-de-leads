@@ -1033,10 +1033,55 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 14px;
             padding: 16px;
-            animation: fadeInUp 0.5s ease-out 0.65s both;
         }
 
         .result-testimonial .testimonial-text { margin-top: 8px; }
+
+        /* ===== TESTIMONIAL CAROUSEL ===== */
+        .testimonial-carousel {
+            position: relative;
+            min-height: 140px;
+            animation: fadeInUp 0.5s ease-out 0.65s both;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            pointer-events: none;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+            position: relative;
+        }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 12px;
+        }
+
+        .carousel-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .carousel-dot.active {
+            width: 20px;
+            border-radius: 3px;
+            background: var(--gold-primary);
+        }
 
         /* ===== FINAL CTA ===== */
         .final-cta {
@@ -1553,19 +1598,26 @@
                     </div>
                 </div>
 
-                <!-- Testimonial -->
+                <!-- Testimonial Carousel -->
                 <div class="report-section">
-                    <div class="result-testimonial">
-                        <div class="testimonial-header">
-                            <div class="testimonial-avatar">CL</div>
-                            <div class="testimonial-info">
-                                <p class="testimonial-name">Carlos L.</p>
-                                <p class="testimonial-location">Cliente desde 2023</p>
-                            </div>
-                            <span class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-                        </div>
-                        <p class="testimonial-text">"J&aacute; recuperei o investimento em <strong>3 anos e meio</strong>. Agora &eacute; <strong>s&oacute; lucro</strong>. A equipe da Gold Energy foi excelente do in&iacute;cio ao fim."</p>
+                    <div class="report-section-header">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+                        O que nossos clientes dizem
                     </div>
+                    <div class="testimonial-carousel" id="testimonialCarousel">
+                        <div class="result-testimonial carousel-slide active">
+                            <div class="testimonial-header">
+                                <div class="testimonial-avatar">--</div>
+                                <div class="testimonial-info">
+                                    <p class="testimonial-name">Carregando...</p>
+                                    <p class="testimonial-location">&nbsp;</p>
+                                </div>
+                                <span class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                            </div>
+                            <p class="testimonial-text">&nbsp;</p>
+                        </div>
+                    </div>
+                    <div class="carousel-dots" id="carouselDots"></div>
                 </div>
 
                 <!-- Final CTA -->
@@ -1646,6 +1698,95 @@
             });
             document.getElementById(screenId).classList.add('active');
             window.scrollTo(0, 0);
+        }
+
+        // ===== TESTIMONIALS DATABASE =====
+        const allTestimonials = [
+            { name: 'Carlos L.', text: 'Logo no primeiro m\u00eas ap\u00f3s a instala\u00e7\u00e3o, minha conta caiu de <strong>R$ 520 para R$ 48</strong>. A equipe foi impec\u00e1vel.' },
+            { name: 'Roberto M.', text: 'Pagava <strong>R$ 480 por m\u00eas</strong> de luz. Hoje minha conta &eacute; o valor m\u00ednimo.' },
+            { name: 'Ana S.', text: 'A empresa <strong>cuidou de tudo</strong>, do projeto t\u00e9cnico \u00e0 homologa\u00e7\u00e3o com a concession\u00e1ria. Para quem busca seguran\u00e7a, eles s\u00e3o a melhor escolha.' },
+            { name: 'Marcos T.', text: 'Instalamos na nossa fazenda e o impacto foi imediato. O sistema solar garante a irriga\u00e7\u00e3o sem sustos no fim do m\u00eas. <strong>Investimento obrigat\u00f3rio para o produtor rural</strong>.' },
+            { name: 'Juliana F.', text: 'No meu restaurante, o ar-condicionado e os freezers eram os vil\u00f5es. Com a energia solar, <strong>reduzi meu custo fixo em 90%</strong>. Mais f\u00f4lego para o neg\u00f3cio!' },
+            { name: 'Paulo H.', text: 'Profissionalismo total. O projeto para minha loja de materiais de constru\u00e7\u00e3o foi feito sob medida. <strong>Recomendo demais pela transpar\u00eancia</strong>.' },
+            { name: 'F\u00e1tima R.', text: 'A parcela do financiamento solar ficou <strong>menor que minha conta de luz antiga</strong>. \u00c9 como trocar um gasto por um investimento no meu pr\u00f3prio im\u00f3vel.' },
+            { name: 'Eduardo P.', text: 'Empresa s\u00e9ria, com garantia e suporte real. Sa\u00ed pagando <strong>R$ 850 para R$ 65</strong> por m\u00eas.' },
+            { name: 'Camila B.', text: 'Atendimento humanizado e focado na nossa necessidade. Explicaram cada detalhe da gera\u00e7\u00e3o de energia e <strong>cumpriram o prazo \u00e0 risca</strong>.' },
+            { name: 'Ricardo A.', text: 'Para quem vive em uma regi\u00e3o com tanto sol, n\u00e3o ter energia solar &eacute; perder dinheiro. <strong>Passaram total confian\u00e7a</strong> desde a primeira visita.' },
+            { name: 'Patr\u00edcia L.', text: 'A conta de luz era um pesadelo na minha cl\u00ednica. Hoje produzo minha pr\u00f3pria energia limpa e <strong>o valor economizado j\u00e1 ajuda na expans\u00e3o do consult\u00f3rio</strong>.' },
+            { name: 'Jo\u00e3o V.', text: 'Instala\u00e7\u00e3o r\u00e1pida e equipe muito organizada. Deixaram o telhado do meu mercado impec\u00e1vel. <strong>Resultado imediato na primeira fatura</strong>.' },
+            { name: 'Mariana C.', text: 'Pesquisei v\u00e1rias empresas e aqui foi onde encontrei a <strong>melhor engenharia</strong>. Efici\u00eancia e transpar\u00eancia do in\u00edcio ao fim.' },
+            { name: 'Antonio S.', text: 'Minha propriedade rural agora &eacute; sustent\u00e1vel. Gerar energia atrav\u00e9s do sol &eacute; a <strong>melhor solu\u00e7\u00e3o contra os aumentos</strong> constantes da conta de luz.' },
+            { name: 'Larissa M.', text: 'O time t\u00e9cnico tirou todas as d\u00favidas sobre o monitoramento pelo celular. <strong>Zero press\u00e3o de venda</strong>, s\u00f3 suporte de alt\u00edssima qualidade.' },
+            { name: 'Bruno D.', text: 'Financiei o sistema para minha padaria e a <strong>economia mensal &eacute; superior ao valor da parcela</strong>.' },
+            { name: 'Cl\u00e1udia N.', text: 'Atendimento via WhatsApp super \u00e1gil. Fizeram o dimensionamento solar em tempo recorde. <strong>Empresa nota 10 no p\u00f3s-venda</strong>.' },
+            { name: 'Felipe G.', text: 'Tinha um gasto enorme com climatiza\u00e7\u00e3o na minha academia. <strong>O solar cortou 65% desse custo</strong>. Inacredit\u00e1vel o poder dessa tecnologia.' },
+            { name: 'Isabela R.', text: 'Achei que o retorno demoraria, mas a <strong>redu\u00e7\u00e3o dr\u00e1stica na conta j\u00e1 veio no primeiro m\u00eas</strong>.' },
+            { name: 'Marcelo K.', text: 'Equipe t\u00e9cnica pontual, equipamentos de primeira linha e <strong>homologa\u00e7\u00e3o r\u00e1pida, sem burocracia</strong>. Excelente servi\u00e7o!' }
+        ];
+
+        function getInitials(name) {
+            const parts = name.replace(/\./g, '').split(' ');
+            return (parts[0][0] + (parts[1] ? parts[1][0] : '')).toUpperCase();
+        }
+
+        function shuffleArray(array) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function initTestimonialCarousel() {
+            const carousel = document.getElementById('testimonialCarousel');
+            const dotsContainer = document.getElementById('carouselDots');
+            if (!carousel) return;
+
+            // Shuffle so each visit shows different order
+            const shuffled = shuffleArray(allTestimonials);
+
+            // Build slides
+            carousel.innerHTML = '';
+            shuffled.forEach((t, i) => {
+                const slide = document.createElement('div');
+                slide.className = 'result-testimonial carousel-slide' + (i === 0 ? ' active' : '');
+                slide.innerHTML = `
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar">${getInitials(t.name)}</div>
+                        <div class="testimonial-info">
+                            <p class="testimonial-name">${t.name}</p>
+                        </div>
+                        <span class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                    </div>
+                    <p class="testimonial-text">"${t.text}"</p>
+                `;
+                carousel.appendChild(slide);
+            });
+
+            // Build dots (limited to 5 visual dots for cleanliness)
+            const totalDots = Math.min(5, shuffled.length);
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < totalDots; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+                dotsContainer.appendChild(dot);
+            }
+
+            // Auto-rotate every 6 seconds
+            const slides = carousel.querySelectorAll('.carousel-slide');
+            const dots = dotsContainer.querySelectorAll('.carousel-dot');
+            let current = 0;
+
+            setInterval(() => {
+                slides[current].classList.remove('active');
+                current = (current + 1) % slides.length;
+                slides[current].classList.add('active');
+
+                // Update dots cyclically
+                dots.forEach(d => d.classList.remove('active'));
+                dots[current % totalDots].classList.add('active');
+            }, 6000);
         }
 
         // ===== DYNAMIC SOCIAL PROOF =====
@@ -1820,6 +1961,9 @@
 
             // Lost money
             document.getElementById('lostMoney').textContent = formatCurrency(lostThisYear);
+
+            // Initialize testimonial carousel
+            initTestimonialCarousel();
 
             // Sticky CTA on scroll
             const resultsContent = document.querySelector('#screen3 .results-content');
