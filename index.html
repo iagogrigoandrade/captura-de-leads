@@ -124,6 +124,32 @@
             display: block;
         }
 
+        .logo-container--results {
+            gap: 14px;
+            padding: 12px 20px;
+        }
+
+        .logo-container--results .logo {
+            max-width: 110px;
+        }
+
+        .logo-slogan {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--gold-dark);
+            line-height: 1.2;
+            letter-spacing: 0.2px;
+            border-left: 2px solid var(--gold-primary);
+            padding-left: 12px;
+            max-width: 140px;
+        }
+
+        @media (max-width: 360px) {
+            .logo-container--results .logo { max-width: 90px; }
+            .logo-slogan { font-size: 0.75rem; max-width: 120px; padding-left: 10px; }
+        }
+
         .content-wrapper {
             flex: 1;
             display: flex;
@@ -1255,7 +1281,7 @@
             <!-- Social proof bar -->
             <div class="social-proof-bar">
                 <span class="live-dot"></span>
-                <span><strong id="viewerCount">127</strong> pessoas calcularam hoje</span>
+                <span><strong id="viewerCount">—</strong> pessoas calcularam hoje</span>
             </div>
 
             <p class="slogan">&#10022; A sua energia vale ouro &#10022;</p>
@@ -1339,7 +1365,7 @@
                         <div class="testimonial-avatar">RM</div>
                         <div class="testimonial-info">
                             <p class="testimonial-name">Roberto M.</p>
-                            <p class="testimonial-location">Juazeiro - BA</p>
+                            <p class="testimonial-location">Jacobina - BA</p>
                         </div>
                         <span class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
                     </div>
@@ -1438,6 +1464,11 @@
     <!-- ===== SCREEN 3: RESULTS ===== -->
     <section id="screen3" class="screen">
         <div class="bg-pattern"></div>
+
+        <div class="logo-container logo-container--results">
+            <img src="https://raw.githubusercontent.com/iagogrigoandrade/gold-energy/refs/heads/main/logogoldenergy.png" alt="Gold Energy" class="logo">
+            <span class="logo-slogan">&#10022; A sua energia vale ouro &#10022;</span>
+        </div>
 
         <div class="results-header">
             <div class="results-header-content">
@@ -1550,7 +1581,7 @@
                 <div class="report-section">
                     <div class="report-section-header">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg>
-                        Formas de pagamento
+                        Formas de pagamento facilitadas
                     </div>
 
                     <div class="payment-options">
@@ -1792,13 +1823,48 @@
         // ===== DYNAMIC SOCIAL PROOF =====
         function updateViewerCount() {
             const el = document.getElementById('viewerCount');
-            const base = 110 + Math.floor(Math.random() * 40);
-            el.textContent = base;
-            setInterval(() => {
-                const current = parseInt(el.textContent);
-                const change = Math.random() > 0.5 ? 1 : -1;
-                el.textContent = Math.max(95, Math.min(180, current + change));
-            }, 8000 + Math.random() * 5000);
+
+            // Curva baseada no horário do dia (reinicia à meia-noite)
+            // 00:00 => 5 | 06:00 => 19 | 12:00 => 87 | 23:50 => 131 | 00:00 => reinicia
+            const keypoints = [
+                [0,    5],    // 00:00
+                [360,  19],   // 06:00
+                [720,  87],   // 12:00
+                [1430, 131],  // 23:50
+                [1440, 131]   // 24:00 (mantém até virar o dia)
+            ];
+
+            function targetForNow() {
+                const now = new Date();
+                const minutes = now.getHours() * 60 + now.getMinutes() + now.getSeconds() / 60;
+                for (let i = 0; i < keypoints.length - 1; i++) {
+                    const [m1, c1] = keypoints[i];
+                    const [m2, c2] = keypoints[i + 1];
+                    if (minutes >= m1 && minutes <= m2) {
+                        const t = (minutes - m1) / (m2 - m1);
+                        return Math.round(c1 + (c2 - c1) * t);
+                    }
+                }
+                return 5;
+            }
+
+            let displayed = targetForNow();
+            el.textContent = displayed;
+
+            // Incrementa de forma natural em direção ao alvo (nunca retrocede durante o dia)
+            function tick() {
+                const target = targetForNow();
+                if (target < displayed) {
+                    // Só acontece quando vira o dia (reinício do ciclo)
+                    displayed = target;
+                } else if (target > displayed) {
+                    displayed += 1;
+                }
+                el.textContent = displayed;
+                // Próximo tick com leve variação para parecer orgânico
+                setTimeout(tick, 12000 + Math.random() * 18000);
+            }
+            setTimeout(tick, 8000 + Math.random() * 7000);
         }
         updateViewerCount();
 
