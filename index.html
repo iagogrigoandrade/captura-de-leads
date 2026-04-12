@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Gold Energy - Descubra quanto você pode economizar com energia solar. Projeto completo, homologação e instalação.">
     <title>Gold Energy | A sua energia vale ouro</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,17 +36,16 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        html, body {
+        html {
+            min-height: -webkit-fill-available;
+        }
+
+        body {
             font-family: 'Outfit', sans-serif;
             background: var(--blue-deeper);
             color: var(--white);
             overflow-x: hidden;
             scroll-behavior: smooth;
-            min-height: 100vh;
-            min-height: -webkit-fill-available;
-        }
-
-        body {
             min-height: 100vh;
             min-height: -webkit-fill-available;
         }
@@ -122,32 +121,6 @@
             max-width: 140px;
             height: auto;
             display: block;
-        }
-
-        .logo-container--results {
-            gap: 14px;
-            padding: 12px 20px;
-        }
-
-        .logo-container--results .logo {
-            max-width: 110px;
-        }
-
-        .logo-slogan {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--gold-dark);
-            line-height: 1.2;
-            letter-spacing: 0.2px;
-            border-left: 2px solid var(--gold-primary);
-            padding-left: 12px;
-            max-width: 140px;
-        }
-
-        @media (max-width: 360px) {
-            .logo-container--results .logo { max-width: 90px; }
-            .logo-slogan { font-size: 0.75rem; max-width: 120px; padding-left: 10px; }
         }
 
         .content-wrapper {
@@ -287,7 +260,7 @@
             border: 2px solid rgba(255, 255, 255, 0.1);
             border-radius: 14px;
             outline: none;
-            transition: all 0.3s ease;
+            transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
         }
 
         .form-input::placeholder { color: rgba(255, 255, 255, 0.3); }
@@ -301,8 +274,15 @@
         .form-input-icon { position: relative; }
         .form-input-icon .form-input { padding-left: 48px; }
         .form-input-icon .icon {
-            position: absolute; left: 16px; top: 50%;
-            transform: translateY(-50%); font-size: 1.1rem; opacity: 0.5;
+            position: absolute; left: 14px; top: 50%;
+            transform: translateY(-50%);
+            width: 18px; height: 18px;
+            opacity: 0.45;
+            color: var(--white);
+            pointer-events: none;
+        }
+        .form-input-icon .icon svg {
+            width: 18px; height: 18px; display: block;
         }
 
         .currency-prefix {
@@ -334,15 +314,17 @@
         .cta-button::before {
             content: '';
             position: absolute;
-            top: 0; left: -100%;
+            top: 0; left: 0;
             width: 100%; height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.5s ease;
+            transform: translateX(-100%);
+            transition: transform 0.5s ease;
         }
 
-        .cta-button:hover::before { left: 100%; }
+        .cta-button:hover::before { transform: translateX(100%); }
         .cta-button:active { transform: scale(0.98); }
         .cta-button:disabled { opacity: 0.7; cursor: not-allowed; }
+        .cta-button, .whatsapp-direct-btn { touch-action: manipulation; }
 
         .cta-button.pulse-cta {
             animation: ctaPulse 2.5s infinite;
@@ -621,12 +603,48 @@
 
         /* ===== SCREEN 3: RESULTS ===== */
         #screen3 {
-            background: var(--blue-deeper);
+            background: var(--gradient-blue);
             padding: 0;
         }
 
+        .results-logo-bar {
+            background: var(--white);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            position: relative;
+            z-index: 10;
+            border-bottom: 3px solid var(--gold-primary);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .results-logo-bar .logo {
+            max-width: clamp(90px, 25vw, 130px);
+            height: auto;
+            display: block;
+            flex-shrink: 0;
+        }
+
+        .results-logo-divider {
+            width: 2px;
+            height: clamp(36px, 6vw, 48px);
+            background: var(--gold-primary);
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
+        .results-logo-slogan {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(0.85rem, 3vw, 1.05rem);
+            font-weight: 700;
+            color: var(--gold-dark);
+            line-height: 1.35;
+        }
+
         .results-header {
-            background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-dark) 100%);
+            background: linear-gradient(135deg, #FFE566 0%, #FFD000 50%, #FFC200 100%);
             padding: 22px 20px 26px;
             text-align: center;
             position: relative;
@@ -648,35 +666,35 @@
 
         .results-greeting {
             font-size: 0.88rem;
-            color: var(--blue-dark);
-            opacity: 0.75;
+            color: var(--blue-primary);
+            opacity: 0.9;
             margin-bottom: 6px;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         .results-total-label {
             font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--blue-dark);
+            font-weight: 700;
+            color: var(--blue-primary);
             text-transform: uppercase;
             letter-spacing: 1.5px;
             margin-bottom: 4px;
-            opacity: 0.7;
+            opacity: 0.85;
         }
 
         .results-total-value {
             font-family: 'Space Grotesk', sans-serif;
             font-size: 2.8rem;
             font-weight: 800;
-            color: var(--blue-dark);
+            color: var(--blue-primary);
             line-height: 1;
-            text-shadow: 0 2px 10px rgba(255, 255, 255, 0.3);
+            text-shadow: 0 2px 12px rgba(255, 255, 255, 0.5);
         }
 
         .results-total-period {
             font-size: 0.82rem;
-            color: var(--blue-dark);
-            opacity: 0.6;
+            color: var(--blue-primary);
+            opacity: 0.75;
             margin-top: 6px;
         }
 
@@ -737,7 +755,7 @@
         }
 
         .economy-card-label {
-            font-size: 0.62rem;
+            font-size: 0.7rem;
             color: var(--gray-text);
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -753,7 +771,7 @@
         }
 
         .economy-card-sub {
-            font-size: 0.62rem;
+            font-size: 0.7rem;
             color: var(--gray-text);
             margin-top: 3px;
         }
@@ -942,7 +960,7 @@
         .roi-detail-value.green { color: var(--success); }
 
         .roi-detail-label {
-            font-size: 0.65rem;
+            font-size: 0.72rem;
             color: var(--gray-text);
             margin-top: 2px;
             line-height: 1.3;
@@ -973,7 +991,13 @@
             background: rgba(247, 181, 0, 0.05);
         }
 
-        .payment-icon { font-size: 1.2rem; margin-bottom: 4px; }
+        .payment-icon {
+            width: 22px; height: 22px;
+            display: block; margin: 0 auto 6px;
+            color: var(--gold-primary);
+        }
+
+        .payment-card { cursor: pointer; }
 
         .payment-name {
             font-size: 0.8rem;
@@ -983,7 +1007,7 @@
         }
 
         .payment-desc {
-            font-size: 0.68rem;
+            font-size: 0.72rem;
             color: var(--gray-text);
         }
 
@@ -1012,7 +1036,7 @@
         }
 
         .installment-note {
-            font-size: 0.68rem;
+            font-size: 0.72rem;
             color: var(--gray-text);
             margin-top: 4px;
         }
@@ -1048,7 +1072,7 @@
         }
 
         .urgency-counter-label {
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             color: var(--gray-text);
             margin-top: 4px;
         }
@@ -1152,9 +1176,13 @@
             gap: 4px;
         }
 
-        .trust-badge-icon { font-size: 1.1rem; }
+        .trust-badge-icon {
+            width: 22px; height: 22px;
+            display: block; margin: 0 auto;
+            color: var(--gold-primary);
+        }
         .trust-badge-text {
-            font-size: 0.68rem;
+            font-size: 0.72rem;
             color: var(--gray-text);
             text-align: center;
         }
@@ -1169,8 +1197,8 @@
         }
 
         .report-footer-text {
-            font-size: 0.65rem;
-            color: rgba(255, 255, 255, 0.25);
+            font-size: 0.72rem;
+            color: rgba(255, 255, 255, 0.3);
             line-height: 1.5;
         }
 
@@ -1240,6 +1268,168 @@
 
         .form-group.has-error .error-message { display: block; }
 
+        /* ===== FORM SELECT ===== */
+        .form-select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            cursor: pointer;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23A0AEC0' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 18px center;
+            padding-right: 44px;
+        }
+        .form-select option {
+            background: #0A2463;
+            color: #fff;
+        }
+
+        /* ===== WHATSAPP ALT SECTION (screen 1) ===== */
+        .whatsapp-alt-section {
+            margin-top: 20px;
+            animation: fadeInUp 0.6s ease-out 0.45s both;
+        }
+        .whatsapp-alt-divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .whatsapp-alt-divider::before,
+        .whatsapp-alt-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255,255,255,0.1);
+        }
+        .whatsapp-alt-divider span {
+            font-size: 0.72rem;
+            color: var(--gray-text);
+            white-space: nowrap;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .whatsapp-alt-block {
+            background: rgba(37, 211, 102, 0.05);
+            border: 1px solid rgba(37, 211, 102, 0.18);
+            border-radius: 20px;
+            padding: 20px 18px;
+        }
+        .whatsapp-alt-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 6px;
+        }
+        .whatsapp-alt-text {
+            font-size: 0.85rem;
+            color: var(--gray-text);
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+        .whatsapp-direct-btn {
+            width: 100%;
+            padding: 16px 20px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fff;
+            background: linear-gradient(135deg, #25D366, #1DA851);
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
+        }
+        .whatsapp-direct-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 28px rgba(37, 211, 102, 0.45);
+        }
+        .whatsapp-direct-btn:active { transform: scale(0.98); }
+        .whatsapp-direct-btn svg { width: 22px; height: 22px; flex-shrink: 0; }
+
+        /* ===== PROFILE BENEFITS (screen 3) ===== */
+        .profile-benefits-section {
+            animation: fadeInUp 0.5s ease-out 0.62s both;
+        }
+        .profile-benefits-box {
+            background: linear-gradient(135deg, rgba(247, 181, 0, 0.08) 0%, rgba(247, 181, 0, 0.02) 100%);
+            border: 1px solid rgba(247, 181, 0, 0.2);
+            border-radius: 20px;
+            padding: 20px 18px;
+            position: relative;
+            overflow: hidden;
+        }
+        .profile-benefits-box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--gradient-gold);
+            border-radius: 20px 20px 0 0;
+        }
+        .profile-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(247, 181, 0, 0.12);
+            border: 1px solid rgba(247, 181, 0, 0.25);
+            border-radius: 50px;
+            padding: 4px 12px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--gold-primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+        .profile-benefits-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 5px;
+        }
+        .profile-benefits-subtitle {
+            font-size: 0.85rem;
+            color: var(--gray-text);
+            margin-bottom: 18px;
+            line-height: 1.4;
+        }
+        .benefits-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .benefit-icon {
+            width: 36px;
+            height: 36px;
+            background: rgba(247, 181, 0, 0.1);
+            border: 1px solid rgba(247, 181, 0, 0.15);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+        .benefit-text {
+            font-size: 0.88rem;
+            color: rgba(255,255,255,0.85);
+            line-height: 1.45;
+            padding-top: 8px;
+        }
+
         /* ===== STICKY CTA (results) ===== */
         .sticky-cta {
             position: fixed;
@@ -1274,14 +1464,14 @@
         </div>
 
         <div class="logo-container">
-            <img src="https://raw.githubusercontent.com/iagogrigoandrade/gold-energy/refs/heads/main/logogoldenergy.png" alt="Gold Energy" class="logo">
+            <img src="https://raw.githubusercontent.com/iagogrigoandrade/gold-energy/refs/heads/main/logogoldenergy.png" alt="Gold Energy" class="logo" width="140" height="56" loading="eager">
         </div>
 
         <div class="content-wrapper">
             <!-- Social proof bar -->
             <div class="social-proof-bar">
                 <span class="live-dot"></span>
-                <span><strong id="viewerCount">—</strong> pessoas calcularam hoje</span>
+                <span><strong id="viewerCount">127</strong> pessoas calcularam hoje</span>
             </div>
 
             <p class="slogan">&#10022; A sua energia vale ouro &#10022;</p>
@@ -1301,39 +1491,54 @@
 
             <form id="leadForm" class="form-container">
                 <div class="form-group">
-                    <label class="form-label">Seu nome</label>
+                    <label class="form-label" for="nome">Seu nome</label>
                     <div class="form-input-icon">
-                        <span class="icon">&#128100;</span>
-                        <input type="text" id="nome" class="form-input" placeholder="Como podemos te chamar?" required>
+                        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+                        <input type="text" id="nome" class="form-input" placeholder="Como podemos te chamar?" required autocomplete="name">
                     </div>
                     <span class="error-message">Por favor, informe seu nome</span>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">WhatsApp</label>
+                    <label class="form-label" for="telefone">WhatsApp</label>
                     <div class="form-input-icon">
-                        <span class="icon">&#128241;</span>
-                        <input type="tel" id="telefone" class="form-input" placeholder="(00) 00000-0000" required>
+                        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></span>
+                        <input type="tel" id="telefone" class="form-input" placeholder="(00) 00000-0000" required autocomplete="tel" inputmode="tel">
                     </div>
                     <span class="error-message">Informe um telefone v&aacute;lido</span>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">Sua cidade</label>
+                    <label class="form-label" for="cidade">Sua cidade</label>
                     <div class="form-input-icon">
-                        <span class="icon">&#128205;</span>
-                        <input type="text" id="cidade" class="form-input" placeholder="Onde voc&ecirc; mora?" required>
+                        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+                        <input type="text" id="cidade" class="form-input" placeholder="Onde voc&ecirc; mora?" required autocomplete="address-level2">
                     </div>
                     <span class="error-message">Por favor, informe sua cidade</span>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">Quanto voc&ecirc; paga de luz por m&ecirc;s?</label>
+                    <label class="form-label" for="valorConta">Quanto voc&ecirc; paga de luz por m&ecirc;s?</label>
                     <div class="form-input-icon">
                         <span class="currency-prefix">R$</span>
-                        <input type="text" id="valorConta" class="form-input currency" placeholder="Ex: 350" required inputmode="numeric">
+                        <input type="text" id="valorConta" class="form-input currency" placeholder="Ex: 350" required inputmode="numeric" autocomplete="off">
                     </div>
                     <span class="error-message">Informe o valor da sua conta (m&iacute;nimo R$ 60)</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="perfil">Perfil de consumo</label>
+                    <div class="form-input-icon">
+                        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+                        <select id="perfil" class="form-input form-select" required autocomplete="off">
+                            <option value="" disabled selected>Selecione seu perfil</option>
+                            <option value="residencial">Residencial</option>
+                            <option value="comercial">Comercial</option>
+                            <option value="rural">Rural</option>
+                            <option value="industrial">Industrial</option>
+                        </select>
+                    </div>
+                    <span class="error-message">Selecione seu perfil de consumo</span>
                 </div>
 
                 <button type="submit" class="cta-button pulse-cta">
@@ -1358,6 +1563,21 @@
                 </div>
             </form>
 
+            <!-- WhatsApp alternative -->
+            <div class="whatsapp-alt-section">
+                <div class="whatsapp-alt-divider">
+                    <span>ou prefira falar direto conosco</span>
+                </div>
+                <div class="whatsapp-alt-block">
+                    <p class="whatsapp-alt-title">&#128270; Pe&ccedil;a sua an&aacute;lise sem custo</p>
+                    <p class="whatsapp-alt-text">Nossa equipe avalia seu perfil de consumo e apresenta uma proposta personalizada para voc&ecirc; come&ccedil;ar a economizar.</p>
+                    <button type="button" class="whatsapp-direct-btn" id="ctaScreen1">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        Solicitar agora
+                    </button>
+                </div>
+            </div>
+
             <!-- Mini testimonials -->
             <div class="testimonials-mini">
                 <div class="testimonial-card">
@@ -1365,7 +1585,7 @@
                         <div class="testimonial-avatar">RM</div>
                         <div class="testimonial-info">
                             <p class="testimonial-name">Roberto M.</p>
-                            <p class="testimonial-location">Jacobina - BA</p>
+                            <p class="testimonial-location">Juazeiro - BA</p>
                         </div>
                         <span class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
                     </div>
@@ -1465,9 +1685,10 @@
     <section id="screen3" class="screen">
         <div class="bg-pattern"></div>
 
-        <div class="logo-container logo-container--results">
-            <img src="https://raw.githubusercontent.com/iagogrigoandrade/gold-energy/refs/heads/main/logogoldenergy.png" alt="Gold Energy" class="logo">
-            <span class="logo-slogan">&#10022; A sua energia vale ouro &#10022;</span>
+        <div class="results-logo-bar">
+            <img src="https://raw.githubusercontent.com/iagogrigoandrade/gold-energy/refs/heads/main/logogoldenergy.png" alt="Gold Energy" class="logo" width="130" height="52" loading="eager">
+            <div class="results-logo-divider"></div>
+            <span class="results-logo-slogan">&#10022; A sua energia<br>vale ouro &#10022;</span>
         </div>
 
         <div class="results-header">
@@ -1581,28 +1802,28 @@
                 <div class="report-section">
                     <div class="report-section-header">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg>
-                        Formas de pagamento facilitadas
+                        Formas de pagamento
                     </div>
 
                     <div class="payment-options">
                         <div class="payment-grid">
                             <div class="payment-card">
-                                <span class="payment-icon">&#128179;</span>
+                                <svg class="payment-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
                                 <p class="payment-name">Cart&atilde;o de Cr&eacute;dito</p>
                                 <p class="payment-desc">Em at&eacute; 21x</p>
                             </div>
                             <div class="payment-card">
-                                <span class="payment-icon">&#127974;</span>
+                                <svg class="payment-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
                                 <p class="payment-name">Financiamento</p>
-                                <p class="payment-desc">Banc&aacute;rio facilitado</p>
+                                <p class="payment-desc">At&eacute; 60x com 3 meses de car&ecirc;ncia</p>
                             </div>
                             <div class="payment-card">
-                                <span class="payment-icon">&#127968;</span>
+                                <svg class="payment-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
                                 <p class="payment-name">Reforma Casa Brasil</p>
-                                <p class="payment-desc">At&eacute; R$ 30 mil</p>
+                                <p class="payment-desc">Incentivo do governo</p>
                             </div>
                             <div class="payment-card">
-                                <span class="payment-icon">&#128665;</span>
+                                <svg class="payment-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="1"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
                                 <p class="payment-name">Ve&iacute;culo em Garantia</p>
                                 <p class="payment-desc">Empr&eacute;stimo especial</p>
                             </div>
@@ -1627,6 +1848,15 @@
                         <div class="urgency-counter" id="lostMoney">R$ 0</div>
                         <p class="urgency-counter-label">s&oacute; este ano pagando conta de luz</p>
                     </div>
+                </div>
+
+                <!-- SECTION 6: Profile Benefits -->
+                <div class="report-section profile-benefits-section" id="profileBenefitsSection" style="display:none;">
+                    <div class="report-section-header">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        Vantagens para o seu perfil
+                    </div>
+                    <div class="profile-benefits-box" id="profileBenefitsBox"></div>
                 </div>
 
                 <!-- Testimonial Carousel -->
@@ -1662,19 +1892,19 @@
 
                 <div class="trust-badges">
                     <div class="trust-badge">
-                        <span class="trust-badge-icon">&#128274;</span>
+                        <svg class="trust-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
                         <span class="trust-badge-text">Dados<br>seguros</span>
                     </div>
                     <div class="trust-badge">
-                        <span class="trust-badge-icon">&#9889;</span>
+                        <svg class="trust-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
                         <span class="trust-badge-text">Projeto<br>completo</span>
                     </div>
                     <div class="trust-badge">
-                        <span class="trust-badge-icon">&#9989;</span>
+                        <svg class="trust-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                         <span class="trust-badge-text">Homologa&ccedil;&atilde;o<br>inclusa</span>
                     </div>
                     <div class="trust-badge">
-                        <span class="trust-badge-icon">&#128295;</span>
+                        <svg class="trust-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
                         <span class="trust-badge-text">Instala&ccedil;&atilde;o<br>profissional</span>
                     </div>
                 </div>
@@ -1702,7 +1932,8 @@
             nome: '',
             telefone: '',
             cidade: '',
-            valorConta: 0
+            valorConta: 0,
+            perfil: ''
         };
 
         // ===== UTILITY FUNCTIONS =====
@@ -1729,6 +1960,80 @@
             });
             document.getElementById(screenId).classList.add('active');
             window.scrollTo(0, 0);
+        }
+
+        // ===== PROFILE BENEFITS DATA =====
+        const profileBenefits = {
+            residencial: {
+                badge: '&#127968; Residencial',
+                title: 'Energia solar transforma a vida da sua fam\u00edlia',
+                subtitle: 'Menos gasto todo m\u00eas, mais seguran\u00e7a financeira para o que realmente importa.',
+                items: [
+                    { icon: '&#128176;', text: 'Reduza sua conta de luz em at\u00e9 90% \u2014 todo m\u00eas, sem exce\u00e7\u00e3o' },
+                    { icon: '&#128200;', text: 'Valorize seu im\u00f3vel em at\u00e9 10% com a usina instalada' },
+                    { icon: '&#128274;', text: 'Proteja sua fam\u00edlia dos reajustes tarif\u00e1rios pelos pr\u00f3ximos 25 anos' },
+                    { icon: '&#128202;', text: 'Gastos previs\u00edveis e sem surpresas no final do m\u00eas' },
+                    { icon: '&#127807;', text: 'Gere energia limpa e contribua com o meio ambiente' }
+                ]
+            },
+            comercial: {
+                badge: '&#127978; Comercial',
+                title: 'Reduza custos e invista no crescimento do seu neg\u00f3cio',
+                subtitle: 'Energia solar \u00e9 um diferencial competitivo que aparece direto no resultado.',
+                items: [
+                    { icon: '&#128200;', text: 'Corte at\u00e9 90% do custo fixo com energia el\u00e9trica' },
+                    { icon: '&#128181;', text: 'Aumente sua margem de lucro sem mudar o pre\u00e7o para o cliente' },
+                    { icon: '&#127941;', text: 'Mais competitividade com uma estrutura de custos mais eficiente' },
+                    { icon: '&#127807;', text: 'Fortale\u00e7a a imagem da sua empresa com sustentabilidade' },
+                    { icon: '&#128260;', text: 'Reinvista a economia em estoque, equipe ou expans\u00e3o' }
+                ]
+            },
+            rural: {
+                badge: '&#127807; Rural',
+                title: 'Mais autonomia e efici\u00eancia para sua propriedade',
+                subtitle: 'Do campo \u00e0 colheita, energia solar resolve onde a conta mais pesa.',
+                items: [
+                    { icon: '&#9889;', text: 'Alimente bombas, irriga\u00e7\u00e3o, resfriadores e cercas el\u00e9tricas com energia limpa' },
+                    { icon: '&#128200;', text: 'Reduza custos operacionais e aumente a margem da produ\u00e7\u00e3o' },
+                    { icon: '&#128268;', text: 'Mais autonomia energ\u00e9tica, menos depend\u00eancia da rede el\u00e9trica' },
+                    { icon: '&#128202;', text: 'Gastos previs\u00edveis, mesmo nas \u00e9pocas de maior demanda no campo' },
+                    { icon: '&#127942;', text: 'Produza com responsabilidade ambiental e agregue valor ao produto' }
+                ]
+            },
+            industrial: {
+                badge: '&#127981; Industrial',
+                title: 'Efici\u00eancia energ\u00e9tica como diferencial competitivo',
+                subtitle: 'Reduza despesas operacionais e planeje melhor o futuro da sua opera\u00e7\u00e3o.',
+                items: [
+                    { icon: '&#128200;', text: 'Reduza despesas operacionais e melhore o planejamento financeiro' },
+                    { icon: '&#128274;', text: 'Proteja sua opera\u00e7\u00e3o dos impactos dos reajustes tarif\u00e1rios' },
+                    { icon: '&#9881;', text: 'Mais efici\u00eancia produtiva com energia de custo fixo e previs\u00edvel' },
+                    { icon: '&#127807;', text: 'Reforce sua imagem com pr\u00e1ticas de inova\u00e7\u00e3o e sustentabilidade' },
+                    { icon: '&#128640;', text: 'Libere capital para crescimento, expans\u00e3o e novos investimentos' }
+                ]
+            }
+        };
+
+        function renderProfileBenefits(perfil) {
+            const section = document.getElementById('profileBenefitsSection');
+            const box = document.getElementById('profileBenefitsBox');
+            if (!section || !box || !profileBenefits[perfil]) return;
+
+            const data = profileBenefits[perfil];
+            box.innerHTML = `
+                <span class="profile-badge">${data.badge}</span>
+                <p class="profile-benefits-title">${data.title}</p>
+                <p class="profile-benefits-subtitle">${data.subtitle}</p>
+                <div class="benefits-list">
+                    ${data.items.map(item => `
+                        <div class="benefit-item">
+                            <div class="benefit-icon">${item.icon}</div>
+                            <p class="benefit-text">${item.text}</p>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            section.style.display = 'block';
         }
 
         // ===== TESTIMONIALS DATABASE =====
@@ -1823,48 +2128,13 @@
         // ===== DYNAMIC SOCIAL PROOF =====
         function updateViewerCount() {
             const el = document.getElementById('viewerCount');
-
-            // Curva baseada no horário do dia (reinicia à meia-noite)
-            // 00:00 => 5 | 06:00 => 19 | 12:00 => 87 | 23:50 => 131 | 00:00 => reinicia
-            const keypoints = [
-                [0,    5],    // 00:00
-                [360,  19],   // 06:00
-                [720,  87],   // 12:00
-                [1430, 131],  // 23:50
-                [1440, 131]   // 24:00 (mantém até virar o dia)
-            ];
-
-            function targetForNow() {
-                const now = new Date();
-                const minutes = now.getHours() * 60 + now.getMinutes() + now.getSeconds() / 60;
-                for (let i = 0; i < keypoints.length - 1; i++) {
-                    const [m1, c1] = keypoints[i];
-                    const [m2, c2] = keypoints[i + 1];
-                    if (minutes >= m1 && minutes <= m2) {
-                        const t = (minutes - m1) / (m2 - m1);
-                        return Math.round(c1 + (c2 - c1) * t);
-                    }
-                }
-                return 5;
-            }
-
-            let displayed = targetForNow();
-            el.textContent = displayed;
-
-            // Incrementa de forma natural em direção ao alvo (nunca retrocede durante o dia)
-            function tick() {
-                const target = targetForNow();
-                if (target < displayed) {
-                    // Só acontece quando vira o dia (reinício do ciclo)
-                    displayed = target;
-                } else if (target > displayed) {
-                    displayed += 1;
-                }
-                el.textContent = displayed;
-                // Próximo tick com leve variação para parecer orgânico
-                setTimeout(tick, 12000 + Math.random() * 18000);
-            }
-            setTimeout(tick, 8000 + Math.random() * 7000);
+            const base = 110 + Math.floor(Math.random() * 40);
+            el.textContent = base;
+            setInterval(() => {
+                const current = parseInt(el.textContent);
+                const change = Math.random() > 0.5 ? 1 : -1;
+                el.textContent = Math.max(95, Math.min(180, current + change));
+            }, 8000 + Math.random() * 5000);
         }
         updateViewerCount();
 
@@ -1888,7 +2158,8 @@
                 { id: 'nome', validate: (v) => v.trim().length >= 2 },
                 { id: 'telefone', validate: (v) => v.replace(/\D/g, '').length >= 10 },
                 { id: 'cidade', validate: (v) => v.trim().length >= 2 },
-                { id: 'valorConta', validate: (v) => parseInt(v) >= 60 }
+                { id: 'valorConta', validate: (v) => parseInt(v) >= 60 },
+                { id: 'perfil', validate: (v) => v !== '' }
             ];
 
             fields.forEach(field => {
@@ -1917,6 +2188,7 @@
             leadData.telefone = document.getElementById('telefone').value;
             leadData.cidade = document.getElementById('cidade').value.trim();
             leadData.valorConta = parseInt(document.getElementById('valorConta').value) || 0;
+            leadData.perfil = document.getElementById('perfil').value;
 
             showScreen('screen2');
             startLoadingAnimation();
@@ -2028,6 +2300,9 @@
             // Lost money
             document.getElementById('lostMoney').textContent = formatCurrency(lostThisYear);
 
+            // Render profile-specific benefits
+            renderProfileBenefits(leadData.perfil);
+
             // Initialize testimonial carousel
             initTestimonialCarousel();
 
@@ -2061,17 +2336,37 @@
         }
 
         // ===== WhatsApp CTA =====
+        const perfilLabels = { residencial: 'Residencial', comercial: 'Comercial', rural: 'Rural', industrial: 'Industrial' };
+
         function openWhatsApp() {
+            const perfilText = leadData.perfil ? ` Meu perfil \u00e9 ${perfilLabels[leadData.perfil]}.` : '';
             const message = encodeURIComponent(
                 `Ol\u00e1! Sou ${leadData.nome}, de ${leadData.cidade}. ` +
-                `Pago aproximadamente R$ ${leadData.valorConta} de conta de luz e tenho interesse em energia solar. ` +
-                `Gostaria de receber uma simula\u00e7\u00e3o completa.`
+                `Pago aproximadamente R$ ${leadData.valorConta} de conta de luz e tenho interesse em energia solar.` +
+                `${perfilText} Gostaria de receber uma simula\u00e7\u00e3o completa.`
             );
             window.open(`https://wa.me/5574999459102?text=${message}`, '_blank');
         }
 
+        function openWhatsAppDirect() {
+            const nome = document.getElementById('nome').value.trim();
+            const cidade = document.getElementById('cidade').value.trim();
+            const valor = document.getElementById('valorConta').value;
+            const perfil = document.getElementById('perfil').value;
+
+            let msg = 'Ol\u00e1! Tenho interesse em energia solar e gostaria de receber uma an\u00e1lise personalizada.';
+            if (nome) {
+                msg = `Ol\u00e1! Sou ${nome}${cidade ? ', de ' + cidade : ''}. Tenho interesse em energia solar`;
+                if (valor) msg += ` e pago cerca de R$ ${valor} de conta de luz`;
+                if (perfil) msg += `. Meu perfil \u00e9 ${perfilLabels[perfil] || perfil}`;
+                msg += '. Gostaria de receber uma an\u00e1lise personalizada.';
+            }
+            window.open(`https://wa.me/5574999459102?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
         document.getElementById('ctaFinal').addEventListener('click', openWhatsApp);
         document.getElementById('ctaSticky').addEventListener('click', openWhatsApp);
+        document.getElementById('ctaScreen1').addEventListener('click', openWhatsAppDirect);
 
         // ===== INPUT FOCUS =====
         document.querySelectorAll('.form-input').forEach(input => {
