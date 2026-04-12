@@ -2207,7 +2207,7 @@
             return isValid;
         }
 
-        form.addEventListener('submit', async (e) => {
+        form.addEventListener('submit', (e) => {
             e.preventDefault();
 
             if (!validateForm()) return;
@@ -2218,10 +2218,12 @@
             leadData.valorConta = parseInt(document.getElementById('valorConta').value) || 0;
             leadData.perfil = document.getElementById('perfil').value;
 
-            await enviarLeadParaWebhook();
-
             showScreen('screen2');
             startLoadingAnimation();
+
+            setTimeout(() => {
+                enviarLeadParaWebhook();
+            }, 0);
         });
 
         // ===== LOADING ANIMATION =====
