@@ -2154,22 +2154,46 @@
         }
 
         // ===== DYNAMIC SOCIAL PROOF =====
+        function getViewerCountByTime() {
+            const now = new Date();
+            const minutes = now.getHours() * 60 + now.getMinutes();
+
+            function interpolate(startMinute, endMinute, startValue, endValue) {
+                const progress = (minutes - startMinute) / (endMinute - startMinute);
+                const value = startValue + (endValue - startValue) * progress;
+                return Math.round(value);
+            }
+
+            if (minutes <= 360) {
+                return interpolate(0, 360, 5, 12); // 00:00 às 06:00
+            }
+
+            if (minutes <= 720) {
+                return interpolate(361, 720, 12, 72); // 06:01 às 12:00
+            }
+
+            return interpolate(721, 1439, 73, 131); // 12:01 às 23:59
+        }
+
         function updateViewerCount() {
             const el = document.getElementById('viewerCount');
-            const base = 110 + Math.floor(Math.random() * 40);
-            el.textContent = base;
-            setInterval(() => {
-                const current = parseInt(el.textContent);
-                const change = Math.random() > 0.5 ? 1 : -1;
-                el.textContent = Math.max(95, Math.min(180, current + change));
-            }, 8000 + Math.random() * 5000);
+            if (!el) return;
+
+            const update = () => {
+                el.textContent = getViewerCountByTime();
+            };
+
+            update();
+            setInterval(update, 60000);
         }
         updateViewerCount();
 
         // ===== FORM HANDLING =====
         const form = document.getElementById('leadForm');
+        const submitButton = form.querySelector('button[type="submit"]');
         const telefoneInput = document.getElementById('telefone');
         const valorContaInput = document.getElementById('valorConta');
+        let isSubmitting = false;
 
         telefoneInput.addEventListener('input', (e) => {
             e.target.value = formatPhone(e.target.value);
@@ -2210,7 +2234,14 @@
         form.addEventListener('submit', (e) => {
             e.preventDefault();
 
+            if (isSubmitting) return;
             if (!validateForm()) return;
+
+            isSubmitting = true;
+            if (submitButton) {
+                submitButton.disabled = true;
+                submitButton.innerHTML = '&#9203; Enviando...';
+            }
 
             leadData.nome = document.getElementById('nome').value.trim();
             leadData.telefone = document.getElementById('telefone').value;
