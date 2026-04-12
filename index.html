@@ -1936,6 +1936,34 @@
             perfil: ''
         };
 
+        const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwijtJe4WxxLApma_BFVMFSoC3ej1rCpEIrNkTiXyH3cJ4iN6_I-7dSvi1V42Gyon0p2w/exec';
+
+        async function enviarLeadParaWebhook() {
+            const payload = {
+                nome: leadData.nome,
+                whatsapp: leadData.telefone,
+                cidade: leadData.cidade,
+                contaLuz: leadData.valorConta,
+                perfil: leadData.perfil,
+                origem: window.location.href
+            };
+
+            try {
+                await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                console.log('Lead enviado para webhook com sucesso.');
+            } catch (error) {
+                console.error('Erro ao enviar lead para webhook:', error);
+            }
+        }
+
         // ===== UTILITY FUNCTIONS =====
         function formatCurrency(value) {
             return new Intl.NumberFormat('pt-BR', {
@@ -2179,7 +2207,7 @@
             return isValid;
         }
 
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
             if (!validateForm()) return;
@@ -2189,6 +2217,8 @@
             leadData.cidade = document.getElementById('cidade').value.trim();
             leadData.valorConta = parseInt(document.getElementById('valorConta').value) || 0;
             leadData.perfil = document.getElementById('perfil').value;
+
+            await enviarLeadParaWebhook();
 
             showScreen('screen2');
             startLoadingAnimation();
